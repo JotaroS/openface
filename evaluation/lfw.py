@@ -84,7 +84,7 @@ def loadPairs(pairsFname):
         for line in f.readlines()[1:]:
             pair = line.strip().split()
             pairs.append(pair)
-    assert(len(pairs) == 6000)
+    #assert(len(pairs) == 6000)
     return np.array(pairs)
 
 
@@ -181,10 +181,11 @@ def findBestThreshold(thresholds, embeddings, pairsTrain):
             return bestThresh
     return bestThresh
 
-
+N=6000
+N_FOLDS  = 10
 def verifyExp(workDir, pairs, embeddings):
     print("  + Computing accuracy.")
-    folds = KFold(n=6000, n_folds=10, shuffle=False)
+    folds = KFold(n=N, n_folds=N_FOLDS, shuffle=False)
     thresholds = arange(0, 4, 0.01)
 
     if os.path.exists("{}/accuracies.txt".format(workDir)):
@@ -222,7 +223,7 @@ def getAUC(fprs, tprs):
 
 def plotOpenFaceROC(workDir, plotFolds=True, color=None):
     fs = []
-    for i in range(10):
+    for i in range(N_FOLDS):
         rocData = pd.read_csv("{}/l2-roc.fold-{}.csv".format(workDir, i))
         fs.append(interp1d(rocData['fpr'], rocData['tpr']))
         x = np.linspace(0, 1, 1000)
@@ -240,7 +241,7 @@ def plotOpenFaceROC(workDir, plotFolds=True, color=None):
             if math.isnan(v):
                 v = 0.0
             tpr += v
-        tpr /= 10.0
+        tpr /= N_FOLDS
         fprs.append(fpr)
         tprs.append(tpr)
     if color:
