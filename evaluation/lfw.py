@@ -181,8 +181,8 @@ def findBestThreshold(thresholds, embeddings, pairsTrain):
             return bestThresh
     return bestThresh
 
-N=6000
-N_FOLDS  = 10
+N=400
+N_FOLDS  = 2
 def verifyExp(workDir, pairs, embeddings):
     print("  + Computing accuracy.")
     folds = KFold(n=N, n_folds=N_FOLDS, shuffle=False)

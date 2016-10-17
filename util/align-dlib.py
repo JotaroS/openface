@@ -121,10 +121,10 @@ def alignMain(args):
 
             if args.fallbackLfw and outRgb is None:
                 nFallbacks += 1
-                deepFunneled = "{}/{}.jpg".format(os.path.join(args.fallbackLfw,
+                deepFunneled = "{}/{}.png".format(os.path.join(args.fallbackLfw,
                                                                imgObject.cls),
                                                   imgObject.name)
-                shutil.copy(deepFunneled, "{}/{}.jpg".format(os.path.join(args.outputDir,
+                shutil.copy(deepFunneled, "{}/{}.png".format(os.path.join(args.outputDir,
                                                                           imgObject.cls),
                                                              imgObject.name))
 
